@@ -18,9 +18,6 @@ module gprFile
 	 reg [4:0] Rd_or_Rt;
 
 
-	 assign busA = regFile[Rs];
-	 assign busB = regFile[Rt];
-
 	 integer i;
 
 	 always @(posedge clk) begin
@@ -32,16 +29,22 @@ module gprFile
 
 		else begin
 			 case(Rdst)
-			 	1'b0: assign Rd_or_Rt = Rt;
-				1'b1: assign Rd_or_Rt = Rd;
+			 	1'b0: Rd_or_Rt <= Rt;
+				1'b1: Rd_or_Rt <= Rd;
 			 endcase
 
+
 			 case(jal_instr)
-		 	 	0: assign Rw = Rd_or_Rt;
-				1: assign Rw = 5'b11111;
+		 	 	0: Rw <= Rd_or_Rt;
+				1: Rw <= 5'b11111;
 			 endcase
 			if(regWr)
 				regFile[Rw] <=busW;
+
+			regFile[0] <= 1'b0;
 		end
 	end
+
+	 assign busA = regFile[Rs];
+	 assign busB = regFile[Rt];
 endmodule

@@ -17,9 +17,6 @@ module fprFile
 	 reg [4:0] Rd_or_Rt;
 
 
-	 assign busA = regFile[Rs];
-	 assign busB = regFile[Rt];
-
 	 integer i;
 
 	 always @(posedge clk) begin
@@ -31,12 +28,15 @@ module fprFile
 
 		else begin
 			 case(Rdst)
-		 	 	0: assign Rw = Rt;
-				1: assign Rw = Rd;
+		 	 	0:  Rw <= Rt;
+				1:  Rw <= Rd;
 			 endcase
 			 
 			if(regWr)
 				regFile[Rw] <=busW;
 		end
 	end
+
+	 assign busA = regFile[Rs];
+	 assign busB = regFile[Rt];
 endmodule
