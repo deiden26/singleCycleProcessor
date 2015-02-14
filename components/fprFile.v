@@ -7,8 +7,8 @@ module fprFile
 	 input [4:0] Rd,
 	 input Rdst,
 	 input [31:0] busW,
-	 output [31:0] busA,
-	 output [31:0] busB
+	 output logic [31:0] busA,
+	 output logic [31:0] busB
 	 );
 
 	 reg [31:0] regFile[31:0];
@@ -35,8 +35,9 @@ module fprFile
 			if(regWr)
 				regFile[Rw] <=busW;
 		end
+
+		busA<=regFile[Rs];
+		busB<=regFile[Rt];
 	end
 
-	 assign busA = regFile[Rs];
-	 assign busB = regFile[Rt];
 endmodule
