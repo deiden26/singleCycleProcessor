@@ -21,18 +21,18 @@ module ifu(
     input  [31:0] pc_from_reg,            // use if use_reg is TRUE
     input  [31:0] inst_from_mem,          // Data coming back from instruction-memory
 
-    output logic [31:0] pc_to_mem,        // Address sent to Instruction memory
-    output logic [31:0] pc_8_out,         // PC of to store in reg31 for JAL & JALR (PC+8)
-    output logic [31:0] inst_out,         // fetched instruction out
+    output [31:0] pc_to_mem,        // Address sent to Instruction memory
+    output [31:0] pc_8_out,         // PC of to store in reg31 for JAL & JALR (PC+8)
+    output [31:0] inst_out          // fetched instruction out
   );
 
 
-  logic    [31:0] current_pc;             // PC we are currently fetching
+  wire    [31:0] pc_plus_4;              // Default next pc
 
-  logic    [31:0] pc_plus_4;              // Default next pc
-  logic    [31:0] next_pc;                // Actual next pc
+  reg    [31:0] next_pc;                // Actual next pc
+  reg    [31:0] current_pc;             // PC we are currently fetching
 
-  assign pc_to_mem = current_pc[31:2], 2'b0};
+  assign pc_to_mem = {current_pc[31:2], 2'b0};
 
   // pass instruction fetched from memory to output (assumes memory passes back 32 bits)
   assign inst_out = inst_from_mem;
@@ -47,24 +47,24 @@ module ifu(
   always@(gp_branch or fp_branch or jump or use_reg or pc_plus_4 or inst_out or pc_from_reg) begin
 	  //If branching, next_pc = pc + 4 + signExtend(inst_out[15:0])
 	  if (gp_branch || fp_branch)
-		  next_pc = pc_plus_4 + `SD inst_out[15:0];
+		  next_pc <= pc_plus_4 + inst_out[15:0];
 	  //If JALR or JR, next_pc = reg31
 	  else if (jump && use_reg)
-		  next_pc = pc_from_reg;
+		  next_pc <= pc_from_reg;
 	  //If jumping (without reg), next_pc = pc + 4 + signExtend(inst_out[25:0])
 	  else if (jump)
-		  next_pc = pc_plus_4 + `SD inst_out[25:0];
+		  next_pc <= pc_plus_4 + inst_out[25:0];
 	  //Default: move to next word in mem, pc = pc + 4
 	  else
-		  next_pc = pc_plus_4;
+		  next_pc <= pc_plus_4;
   end
 
   // This register holds the PC value
   always@(posedge clock) begin
     if(reset)
-      current_pc <= `SD 0;       // initial PC value is 0
+      current_pc <= 'sd0;       // initial PC value is 0
     else
-      current_pc <= `SD next_pc; // transition to next PC
+      current_pc <= next_pc; // transition to next PC
   end  // always
 
 endmodule  // module if_stage
