@@ -21,16 +21,16 @@ module ifu(
     input  [31:0] pc_from_reg,            // use if use_reg is TRUE
     input  [31:0] inst_from_mem,          // Data coming back from instruction-memory
 
-    output [31:0] pc_to_mem,        // Address sent to Instruction memory
-    output [31:0] pc_8_out,         // PC of to store in reg31 for JAL & JALR (PC+8)
-    output [31:0] inst_out          // fetched instruction out
+    output [31:0] pc_to_mem,              // Address sent to Instruction memory
+    output [31:0] pc_8_out,               // PC of to store in reg31 for JAL & JALR (PC+8)
+    output [31:0] inst_out                // fetched instruction out
   );
 
 
-  wire    [31:0] pc_plus_4;              // Default next pc
+  wire    [31:0] pc_plus_4;               // Default next pc
 
-  reg    [31:0] next_pc;                // Actual next pc
-  reg    [31:0] current_pc;             // PC we are currently fetching
+  reg     [31:0] next_pc;                 // Actual next pc
+  reg     [31:0] current_pc;              // PC we are currently fetching
 
   assign pc_to_mem = {current_pc[31:2], 2'b0};
 
@@ -64,7 +64,7 @@ module ifu(
     if(reset)
       current_pc <= 'sd0;       // initial PC value is 0
     else
-      current_pc <= next_pc; // transition to next PC
-  end  // always
+      current_pc <= next_pc;    // transition to next PC
+  end 
 
-endmodule  // module if_stage
+endmodule
