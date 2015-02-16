@@ -1,0 +1,5 @@
+TARGET = ../executables/ifu_test.exe
+INPUTS = ../components/ifu.v ../components/imem.v ../tests/ifu_tb.v
+FIRST_COMPONENT = ifu_tb
+${TARGET}: ${INPUTS};
+	iverilog -o ${TARGET} -s ${FIRST_COMPONENT} ${INPUTS}
