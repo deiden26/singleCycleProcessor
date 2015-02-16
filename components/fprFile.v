@@ -22,18 +22,20 @@ module fprFile
 	 always @(posedge clk) begin
 	 	if(reset) begin
 		 	for (i = 0; i < 32; i = i+1) begin
-	 			regFile[i] <= 0;
+	 			regFile[i] = 0;
  			end
 		end 
 
 		else begin
 			 case(Rdst)
-		 	 	0:  Rw <= Rt;
-				1:  Rw <= Rd;
+		 	 	0:  Rw = Rt;
+				1:  Rw = Rd;
 			 endcase
 			 
 			if(regWr)
-				regFile[Rw] <=busW;
+				regFile[Rw] =busW;
+			else
+				regFile[Rw] <=regFile[Rw];
 		end
 
 		busA<=regFile[Rs];
