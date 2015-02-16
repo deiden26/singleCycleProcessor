@@ -23,25 +23,27 @@ module gprFile
 	 always @(posedge clk) begin
 	 	if(reset) begin
 		 	for (i = 0; i < 32; i = i+1) begin
-	 			regFile[i] <= 0;
+	 			regFile[i] = 0;
  			end
 		end 
 
 		else begin
 			 case(Rdst)
-			 	1'b0: Rd_or_Rt <= Rt;
-				1'b1: Rd_or_Rt <= Rd;
+			 	0: Rd_or_Rt = Rt;
+				1: Rd_or_Rt = Rd;
 			 endcase
-
 
 			 case(jal_instr)
-		 	 	0: Rw <= Rd_or_Rt;
-				1: Rw <= 5'b11111;
+		 	 	0: Rw = Rd_or_Rt;
+				1: Rw = 5'b11111;
 			 endcase
-			if(regWr)
-				regFile[Rw] <=busW;
 
-			regFile[0] <= 1'b0;
+			if(regWr)
+				regFile[Rw] =busW;
+			else
+				regFile[Rw] <=regFile[Rw];
+
+			regFile[0] <= 0;
 		end
 
 		busA<=regFile[Rs];
