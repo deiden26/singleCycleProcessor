@@ -11,7 +11,7 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, busAou
 	reg [31:0]  seqOut, sneOut, sltOut, sgtOut, sleOut, sgeOut;
 	reg [31:0]  lhiOut;
 
-	always@(1)
+	always@(*)
 	begin
 
 	//busA assignments
@@ -79,7 +79,7 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, busAou
 	end
 
 	//FPU output
-	always@(1)
+	always@(*)
         begin
         multOut <= busA * busB;
         if (multOut<0)
