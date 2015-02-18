@@ -38,7 +38,7 @@ module ifu_tb;
 		#50 clock = !clock;
 
 		initial begin
-			memfile = "../tests/ifu_tb.hex";
+			memfile = "../tests/instr.hex";
 			$readmemh(memfile, IMEM.mem);
 		end
 
