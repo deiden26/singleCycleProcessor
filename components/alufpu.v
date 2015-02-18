@@ -1,9 +1,11 @@
-module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, busAout, fbusAout);
+module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, branch);
 	input [31:0] busA, busB, fbusA, fbusB;
 	input [3:0] ALUctrl;
 	input FPUctrl;
 
-	output [31:0] ALUout, FPUout, busAout, fbusAout;
+	output [31:0] ALUout, FPUout;
+	output branch;
+	reg branch;
 	reg [31:0] multOut, multuOut, FPUout, ALUout, busAout, fbusAout;
 	reg [31:0]  sllOut, srlOut, sraOut;
 	reg [31:0]  addOut, subOut;
@@ -14,14 +16,12 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, busAou
 	always@(*)
 	begin
 
-	//busA assignments
-	busAout <= busA;
-	fbusAout <= fbusA;
+	//shift busB
 	
 	//ALU output
 	sllOut <= busA << busB;
 	srlOut <= busA >> busB;
-	sraOut <= busA >>> busB;
+	sraOut <= $signed(busA) >>> busB;
 	addOut <= busA + busB;
 	subOut <= busA - busB;
 	andOut <= busA & busB;
@@ -76,13 +76,16 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, busAou
 	13: ALUout <= sgeOut;
 	14: ALUout <= lhiOut;
 	endcase
+
+	branch <= ALUout[0];
+
 	end
 
 	//FPU output
 	always@(*)
         begin
-        multOut <= busA * busB;
-        if (multOut<0)
+        multOut <= fbusA * fbusB;
+        if (multOut>2147483648)
                 multuOut <= 0 - multOut;
         else
                 multuOut <= multOut;
