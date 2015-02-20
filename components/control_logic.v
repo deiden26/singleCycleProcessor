@@ -1,11 +1,11 @@
 module control_logic(
 	input [0:31] instruction,
-	output  logic REG_DST,
-	output  logic REG_WR,
-	output  logic F_REG_WR,
+	output logic REG_DST,
+	output logic REG_WR,
+	output logic F_REG_WR,
 	output logic BRANCH,
 	output logic JUMP,
-	output logic [3:0] ALU_CTRL_BITS,
+	output logic [0:3] ALU_CTRL_BITS,
 	output logic FPU_CTRL_BITS,
 	output logic ALU_SRC,
 	output logic IMM_ZERO,
@@ -18,8 +18,8 @@ module control_logic(
 	output logic MEM_SIGN_EXT,
 	output logic JAL_INSTR);
 
-logic [5:0] opcode;
-logic [5:0] func;
+logic [0:5] opcode;
+logic [0:5] func;
 
 
 always @(*) begin

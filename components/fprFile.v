@@ -2,19 +2,19 @@ module fprFile
 	(input clk,
 	 input reset,
 	 input regWr,
-	 input [4:0] Rs,
-	 input [4:0] Rt,
-	 input [4:0] Rd,
+	 input [0:4] Rs,
+	 input [0:4] Rt,
+	 input [0:4] Rd,
 	 input Rdst,
-	 input [31:0] busW,
-	 output logic [31:0] busA,
-	 output logic [31:0] busB
+	 input [0:31] busW,
+	 output logic [0:31] busA,
+	 output logic [0:31] busB
 	 );
 
-	 reg [31:0] regFile[31:0];
+	 reg [0:31] regFile[0:31];
 
-	 reg [4:0] Rw;
-	 reg [4:0] Rd_or_Rt;
+	 reg [0:4] Rw;
+	 reg [0:4] Rd_or_Rt;
 
 
 	 integer i;
