@@ -32,7 +32,7 @@ module ifu(
   reg     [0:31] next_pc;                 // Actual next pc
   reg     [0:31] current_pc;              // PC we are currently fetching
 
-  assign pc_to_mem = {current_pc[2:31], 2'b0};
+  assign pc_to_mem = {2'b0, current_pc[2:31]};
 
   // pass instruction fetched from memory to output (assumes memory passes back 32 bits)
   assign inst_out = inst_from_mem;
