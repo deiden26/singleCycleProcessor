@@ -1,6 +1,6 @@
 #Variables for ifu test bench
 TARGET = ../executables/processor_tb.exe
-VERILOG_INPUTS = ../components/*.v ../processor ../tests/processor_tb.v
+VERILOG_INPUTS = ../components/*.v .../components/*.vh ./processor ../tests/processor_tb.v
 FIRST_COMPONENT = processor_tb
 
 #Variables for asm hex
