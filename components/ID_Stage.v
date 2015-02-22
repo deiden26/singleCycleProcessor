@@ -5,7 +5,7 @@ module ID_Stage(
 	input [0:31] BUS_W ,
 	input [0:31] FBUS_W,
 	output [0:31] OPERAND_A,
-	output logic [31:0] OPERAND_B,
+	output logic [0:31] OPERAND_B,
 	output [0:31] F_OPERAND_A,
 	output [0:31] F_OPERAND_B,
 	output BRANCH,
@@ -43,7 +43,7 @@ control_logic control_0(
 	.JUMP(JUMP),
 	.ALU_CTRL_BITS(ALU_CTRL_BITS),
 	.FPU_CTRL_BITS(FPU_CTRL_BITS),
-	.ALU_SRC(temp_ALU_SRC),
+	.ALU_SRC(ALU_SRC),
 	.IMM_ZERO(temp_IMM_ZERO),
 	.MEM_WR(MEM_WR),
 	.MEM_TO_REG(MEM_TO_REG),
@@ -77,7 +77,7 @@ fprFile fprFile0(
 	.Rt(Rt),
 	.Rd(Rd),
 	.Rdst(temp_REG_DST),
-	.busW(F_BUS_W),
+	.busW(FBUS_W),
 	.busA(F_OPERAND_A),
 	.busB(F_OPERAND_B)
 	);
@@ -93,6 +93,6 @@ IMM_FIELD = (temp_IMM_ZERO == 1) ? 16'h0 : instruction[16:31];
 
 	IMM_FIELD_EXT = (temp_EXT_OP == 1) ? {{16{IMM_FIELD[15]}}, IMM_FIELD[0:15]} : {16'h0, IMM_FIELD[0:15]};
 
-	OPERAND_B = (temp_ALU_SRC ==1) ? IMM_FIELD_EXT : temp_bus_B;
+	OPERAND_B = (ALU_SRC ==1) ? IMM_FIELD_EXT : temp_bus_B;
 	end
 endmodule

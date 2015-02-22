@@ -136,11 +136,13 @@ case(opcode)
 			MOVFP2I: begin
 				ALU_CTRL_BITS = ALU_ADD_CTRL;
 				REG_WR = 1;
+				MOV_INSTR = 1;
 				end
 
 			MOVI2FP: begin
 				ALU_CTRL_BITS = ALU_ADD_CTRL;
 				F_REG_WR = 1;
+				MOV_INSTR = 1;
 				end
 
 			default: begin						//NOP, invalid

@@ -72,9 +72,9 @@ typedef enum logic [5:0]{
  LB 	=	6'h20,
  LH 	=	6'h21,
  LW 	=	6'h23,
- LBU 	=6'h34,
- LHU 	=6'h35,
- SB 	=	6'h38,
- SH 	=	6'h39,
- SW 	=	6'h3b
+ LBU 	=6'h24,
+ LHU 	=6'h25,
+ SB 	=	6'h28,
+ SH 	=	6'h29,
+ SW 	=	6'h2b
 }OPCODE;
