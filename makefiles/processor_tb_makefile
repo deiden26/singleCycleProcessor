@@ -13,7 +13,7 @@ HEX_FILES = ${HEX_DATA} ${HEX_INSTR}
 default: ${TARGET} ${HEX_FILES};
 # Generate executable ifu test bench
 ${TARGET}: ${VERILOG_INPUTS};
-	verilog -g system-verilog -o ${TARGET} -s ${FIRST_COMPONENT} ${VERILOG_INPUTS}
+	/Users/boochikashinkunti/bin/iverilog -g2009 -o ${TARGET} -s ${FIRST_COMPONENT} ${VERILOG_INPUTS}
 
 # Generate Verilog-friendly hex files from an ASM file
 ${HEX_FILES}: ${DLXASM} ${ASM} ;

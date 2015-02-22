@@ -63,7 +63,7 @@ module ifu(
   // This register holds the PC value
   always@(posedge clock) begin
     if(reset)
-      current_pc <= 'sd0;       // initial PC value is 0
+      current_pc <= 32'b0;       // initial PC value is 0
     else
       current_pc <= next_pc;    // transition to next PC
   end 
