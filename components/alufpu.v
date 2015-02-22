@@ -1,17 +1,17 @@
-module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, branch);
-	input [31:0] busA, busB, fbusA, fbusB;
-	input [3:0] ALUctrl;
+module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, gp_branch, fp_branch);
+	input [0:31] busA, busB, fbusA, fbusB;
+	input [0:3] ALUctrl;
 	input FPUctrl;
 
-	output [31:0] ALUout, FPUout;
+	output [0:31] ALUout, FPUout;
 	output branch;
 	reg branch;
-	reg [31:0] multOut, multuOut, FPUout, ALUout, busAout, fbusAout;
-	reg [31:0]  sllOut, srlOut, sraOut;
-	reg [31:0]  addOut, subOut;
-	reg [31:0]  orOut, andOut, xorOut;
-	reg [31:0]  seqOut, sneOut, sltOut, sgtOut, sleOut, sgeOut;
-	reg [31:0]  lhiOut;
+	reg [0:31] multOut, multuOut, FPUout, ALUout, busAout, fbusAout;
+	reg [0:31]  sllOut, srlOut, sraOut;
+	reg [0:31]  addOut, subOut;
+	reg [0:31]  orOut, andOut, xorOut;
+	reg [0:31]  seqOut, sneOut, sltOut, sgtOut, sleOut, sgeOut;
+	reg [0:31]  lhiOut;
 
 	always@(*)
 	begin
@@ -77,7 +77,7 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, branch
 	14: ALUout <= lhiOut;
 	endcase
 
-	branch <= ALUout[0];
+	gp_branch <= ALUout[31];
 
 	end
 
@@ -94,5 +94,8 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, branch
                 FPUout <= multOut;
         else
                 FPUout <= multuOut;
+
+        fp_branch = 0;
+        
         end
 endmodule
