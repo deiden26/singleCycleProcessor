@@ -16,7 +16,8 @@ module control_logic(
 	output logic MEM_BYTE_OP,
 	output logic MEM_HALFWORD_OP,
 	output logic MEM_SIGN_EXT,
-	output logic JAL_INSTR);
+	output logic JAL_INSTR,
+	output logic JUMP_USE_REG);
 
 logic [0:5] opcode;
 logic [0:5] func;
@@ -45,6 +46,7 @@ func = instruction[26:31];
 	  MEM_HALFWORD_OP = 0;
 	  MEM_SIGN_EXT = 0;
 	  JAL_INSTR = 0;
+	  JUMP_USE_REG = 0;
 
 case(opcode)
 	
@@ -232,12 +234,16 @@ case(opcode)
 		ALU_SRC = 1;
 	end //LHI
 
-	JR: JUMP = 1;
+	JR: begin
+		JUMP = 1;
+		JUMP_USE_REG = 1;
+	end// JR
 
 	JALR: begin
 		REG_WR = 1;
 		JUMP = 1;
 		JAL_INSTR = 1;
+		JUMP_USE_REG = 1;
 	end //JALR
 
 	SLLI: begin
