@@ -12,11 +12,11 @@ module processor(
 	 input [0:31]data_from_mem,
 	//IMEM signals
 	 output [0:31]iaddr,
-	 input [0:31]instr
+	 input [0:31]inst_from_mem
 );
 
 	wire gp_branch, fp_branch, jump, jump_use_reg, branch, fpu_ctrl_bits, write_enable, mem_to_reg, mov_instr, mem_byte, mem_half_word, mem_sign_extend, jal_instr;
-	wire [0:31] pc_from_reg, inst_from_mem, pc_to_mem, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
+	wire [0:31] pc_from_reg, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
 	wire [0:3] alu_ctrl_bits;
 
 	ifu IFU(
@@ -30,7 +30,7 @@ module processor(
 		.pc_from_reg (pc_from_reg),            // use if use_reg is TRUE
 		.inst_from_mem (inst_from_mem),          // Data coming back from instruction-memory
 
-		.pc_to_mem (pc_to_mem),              // Address sent to Instruction memory
+		.pc_to_mem (iaddr),              // Address sent to Instruction memory
 		.pc_8_out (pc_plus_8),               // PC of to store in reg31 for JAL & JALR (PC+8)
 		.inst_out (instr)               // fetched instruction out
 	);
