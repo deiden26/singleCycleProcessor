@@ -1,9 +1,9 @@
 module wb(ALUout, FPUout, busA, fbusA, MEMout, busW, fbusW, busWctrl, memToReg, movInstr, jalOut);
-	input [31:0] ALUout, FPUout, busA, fbusA, MEMout, jalOut;
+	input [0:31] ALUout, FPUout, busA, fbusA, MEMout, jalOut;
 	input busWctrl, memToReg, movInstr;
 
-	output [31:0] busW, fbusW;
-	reg [31:0] busW, fbusW, muxout1, muxout2, muxout3;
+	output [0:31] busW, fbusW;
+	reg [0:31] busW, fbusW, muxout1, muxout2, muxout3;
 
 	always@(*)
 	begin

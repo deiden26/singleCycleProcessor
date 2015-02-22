@@ -12,7 +12,6 @@ module ID_Stage(
 	output JUMP,
 	output [0:3] ALU_CTRL_BITS,
 	output FPU_CTRL_BITS,
-	output ALU_SRC,
 	output MEM_WR,
 	output MEM_TO_REG,
 	output MOV_INSTR,
@@ -21,7 +20,7 @@ module ID_Stage(
 	output MEM_SIGN_EXT,
 	output JAL_INSTR);
 
-logic temp_REG_DST, temp_R_31, temp_REG_WR, temp_F_REG_WR, temp_IMM_ZERO, temp_ALU_SRC, temp_EXT_OP;
+logic temp_REG_DST, temp_R_31, temp_REG_WR, temp_F_REG_WR, temp_IMM_ZERO, ALU_SRC, temp_EXT_OP;
 
 logic [0:31] temp_bus_B, temp_f_bus_B;
 

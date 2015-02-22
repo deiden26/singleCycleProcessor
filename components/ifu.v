@@ -14,6 +14,7 @@
 module ifu(
     input         clock,                  // system clock
     input         reset,                  // system reset
+	input         branch,                 // whether to branch at all
     input         gp_branch,              // taken-branch signal for alu
     input         fp_branch,              // taken-branch signal for fpu 
     input         jump,                   // jump signal
@@ -44,9 +45,9 @@ module ifu(
   assign pc_8_out = pc_plus_4 + 4;
 
   // calculate next pc
-  always@(gp_branch or fp_branch or jump or use_reg or pc_plus_4 or inst_out or pc_from_reg) begin
+  always@(branch or gp_branch or fp_branch or jump or use_reg or pc_plus_4 or inst_out or pc_from_reg) begin
 	  //If branching, next_pc = pc + 4 + signExtend(inst_out[0:15])
-	  if (gp_branch || fp_branch)
+	  if ((gp_branch || fp_branch) && branch)
 		  next_pc <= pc_plus_4 + inst_out[0:15];
 	  //If JALR or JR, next_pc = reg31
 	  else if (jump && use_reg)

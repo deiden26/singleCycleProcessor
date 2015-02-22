@@ -29,13 +29,13 @@ module processor_tb();
 		.clock(clock),
 		.reset(reset),
 		//DMEM signals
-		.addr(addr),
-		.write_enable(write_enable),
-		.byte(byte),
-		half_word(half_word),
-		sign_extend(sign_extend),
-		.data_out(data_from_proc),
-		.data_in(data_from_mem),
+		.addr_to_mem(addr),
+		.write_enable_to_mem(write_enable),
+		.byte_to_mem(byte),
+		.half_word_to_mem(half_word),
+		.sign_extend_to_mem(sign_extend),
+		.data_to_mem(data_from_proc),
+		.data_from_mem(data_from_mem),
 		//IMEM signals
 		.iaddr(iaddr),
 		.instr(instr)

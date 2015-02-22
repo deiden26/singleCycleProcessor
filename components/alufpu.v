@@ -4,7 +4,7 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, gp_bra
 	input FPUctrl;
 
 	output [0:31] ALUout, FPUout;
-	output branch;
+	output gp_branch, fp_branch;
 	reg branch;
 	reg [0:31] multOut, multuOut, FPUout, ALUout, busAout, fbusAout;
 	reg [0:31]  sllOut, srlOut, sraOut;
