@@ -18,7 +18,9 @@ module ID_Stage(
 	output MEM_BYTE_OP,
 	output MEM_HALFWORD_OP,
 	output MEM_SIGN_EXT,
-	output JAL_INSTR);
+	output JAL_INSTR,
+	output JUMP_USE_REG
+	);
 
 logic temp_REG_DST, temp_R_31, temp_REG_WR, temp_F_REG_WR, temp_IMM_ZERO, ALU_SRC, temp_EXT_OP;
 
@@ -51,7 +53,8 @@ control_logic control_0(
 	.MEM_BYTE_OP(MEM_BYTE_OP),
 	.MEM_HALFWORD_OP(MEM_HALFWORD_OP),
 	.MEM_SIGN_EXT(MEM_SIGN_EXT),
-	.JAL_INSTR(JAL_INSTR) 
+	.JAL_INSTR(JAL_INSTR),
+	.JUMP_USE_REG(JUMP_USE_REG)
 	);
 
 gprFile gprFile0(

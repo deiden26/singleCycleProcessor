@@ -1,4 +1,4 @@
-module dmem(
+module mem_stage(
 	input store_fp,
 
 	input [0:31] addr_from_proc,

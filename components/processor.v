@@ -3,21 +3,21 @@ module processor(
 	 input clock,
 	 input reset,
 	//DMEM signals
-	 output addr_to_mem,
+	 output [0:31]addr_to_mem,
 	 output write_enable_to_mem,
 	 output byte_to_mem,
 	 output half_word_to_mem,
 	 output sign_extend_to_mem,
-	 output data_to_mem,
-	 input data_from_mem,
+	 output [0:31]data_to_mem,
+	 input [0:31]data_from_mem,
 	//IMEM signals
-	 output iaddr,
-	 input instr
+	 output [0:31]iaddr,
+	 input [0:31]instr
 );
 
-	wire gp_branch, fp_branch, jump, jump_use_reg, branch, fpu_ctrl_bits, write_enable, mem_to_reg, mov_instr, mem_byte, mem_half_word, mem_sign_extend, jal_instr,
-	wire [0:31] pc_from_reg, inst_from_mem, pc_to_mem, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out,
-	wire [0:3] alu_ctrl_bits
+	wire gp_branch, fp_branch, jump, jump_use_reg, branch, fpu_ctrl_bits, write_enable, mem_to_reg, mov_instr, mem_byte, mem_half_word, mem_sign_extend, jal_instr;
+	wire [0:31] pc_from_reg, inst_from_mem, pc_to_mem, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
+	wire [0:3] alu_ctrl_bits;
 
 	ifu IFU(
 		.clock (clock),                  // system clock
@@ -55,8 +55,8 @@ module processor(
 		.MEM_BYTE_OP(mem_byte),
 		.MEM_HALFWORD_OP(mem_half_word),
 		.MEM_SIGN_EXT(mem_sign_extend),
-		.JAL_INSTR(jal_instr)
-		.JUMP_USE_REG(jump_use_reg),
+		.JAL_INSTR(jal_instr),
+		.JUMP_USE_REG(jump_use_reg)
 	);
 	
 	alufpu ALUFPU(
@@ -67,7 +67,7 @@ module processor(
 		.fbusB(f_operand_b),
 		.FPUctrl(fpu_ctrl_bits),
 		.ALUout(alu_out),
-		.FPUout(fpu_out),
+		.FPUout(fpu_out)
 	);
 
 	mem_stage MEM(
@@ -104,6 +104,6 @@ module processor(
 		.memToReg(mem_to_reg),
 		.movInstr(mov_instr),
 		.jalOut(pc_plus_8)
-	):
+	);
 	
 endmodule

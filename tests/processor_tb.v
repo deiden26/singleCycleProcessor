@@ -3,8 +3,8 @@ module processor_tb();
     parameter DMEMFILE = "../tests/data.hex";
     reg [8*80-1:0] filename;
     reg reset, clock; 
-    wire [0:31] addr, iaddr, data_from_mem, data_from_reg, instr;
-	wire write_enable, byte, half_word, sign_extend;
+    wire [0:31] addr, iaddr, data_from_mem, data_from_reg, instr,data_from_proc;
+	wire write_enable, mem_byte, mem_half_word, sign_extend;
 
     integer i;
 
@@ -13,8 +13,8 @@ module processor_tb();
 		.data_out(data_from_mem),
 		.data_in(data_from_reg),
 		.write_enable(write_enable),
-		.byte(byte),
-		.half_word(half_word),
+		.mem_byte(mem_byte),
+		.mem_half_word(mem_half_word),
 		.sign_extend(sign_extend),
 		.clock(clock)
 	);
@@ -31,8 +31,8 @@ module processor_tb();
 		//DMEM signals
 		.addr_to_mem(addr),
 		.write_enable_to_mem(write_enable),
-		.byte_to_mem(byte),
-		.half_word_to_mem(half_word),
+		.byte_to_mem(mem_byte),
+		.half_word_to_mem(mem_half_word),
 		.sign_extend_to_mem(sign_extend),
 		.data_to_mem(data_from_proc),
 		.data_from_mem(data_from_mem),
@@ -63,8 +63,8 @@ module processor_tb();
         $readmemh(filename, DMEM.mem);
 
 		//Monitor memory
-        $monitor("write enable=%b | byte=%b | half word=%b | sign extend=%b | address=%x | data out= %x | data in=%x",
-			write_enable, byte, half_word, sign_extend, addr, data_out, data_in);
+        $monitor("write enable=%b | mem_byte=%b | half word=%b | sign extend=%b | address=%x | data out= %x | data in=%x",
+			write_enable, mem_byte, mem_half_word, sign_extend, addr, data_from_mem, data_from_reg);
 
 		//Start clock
 		clock = 0;
