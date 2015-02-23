@@ -19,6 +19,9 @@ module processor(
 	wire [0:31] pc_from_reg, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
 	wire [0:3] alu_ctrl_bits;
 
+	initial
+		$monitor("Clock=%b \t PC=%x \t Instruction=%x \t addr=%x \t data_from_mem=%d \t data_to_mem=%d", clock, iaddr, inst_from_mem, addr_to_mem, data_from_mem, data_to_mem);
+
 	ifu IFU(
 		.clock (clock),                  // system clock
 		.reset (reset),                  // system reset

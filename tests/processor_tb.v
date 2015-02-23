@@ -63,10 +63,10 @@ module processor_tb();
         $readmemh(filename, DMEM.mem);
 
 		//Monitor memory
-   //      $monitor("write enable=%b | mem_byte=%b | half word=%b | sign extend=%b | address=%x | data out= %x | data in=%x",
-			// write_enable, mem_byte, mem_half_word, sign_extend, addr, data_from_mem, data_from_reg);
+		// $monitor("write enable=%b | mem_byte=%b | half word=%b | sign extend=%b | address=%x | data out= %x | data in=%x",
+		// 	write_enable, mem_byte, mem_half_word, sign_extend, addr, data_from_mem, data_from_reg);
 
-		$monitor("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x", clock, reset, iaddr, instr);
+		// $monitor("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x", clock, reset, iaddr, instr);
 
 		//Start clock
 		clock = 0;
@@ -75,11 +75,16 @@ module processor_tb();
 		reset = 1;
 		#100 reset = 0;
 
-		//End Simulation after 100 cycles
-		#10000 $finish;
-
         // Debug: dump memory
-        //$writememh("dmem", DMEM.mem);
+        // $writememh("dmem", DMEM.mem);
 	end
+
+	always begin
+		if(^instr === 1'bx && reset === 0)
+			$finish;
+		else
+			#100;
+	end
+
 endmodule
 

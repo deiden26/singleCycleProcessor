@@ -4,7 +4,7 @@ VERILOG_INPUTS = ../components/*.v ../components/*.vh ../tests/processor_tb.v
 FIRST_COMPONENT = processor_tb
 
 #Variables for asm hex
-ASM = ../tests/test_asm.s
+ASM = ../tests/fib.asm
 HEX_DATA = ../tests/data.hex
 HEX_INSTR= ../tests/instr.hex
 DLXASM = ../scripts/dlxasm
