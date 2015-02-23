@@ -20,12 +20,14 @@ module mem_stage(
 );
 	reg [0:31] data_from_proc;
 
-	always @(store_fp) begin
-		if (store_fp)
-			data_from_proc = fp_data_from_proc;
-		else
-			data_from_proc = gp_data_from_proc;
-	end
+	//always @(*) begin
+	//	if (store_fp)
+	//		data_from_proc = fp_data_from_proc;
+	//	else
+	//		data_from_proc = gp_data_from_proc;
+	//end
+
+	assign data_from_proc = (store_fp == 1) ? fp_data_from_proc : gp_data_from_proc;
 
 	assign addr_to_mem = addr_from_proc;
 	assign data_to_mem = data_from_proc;

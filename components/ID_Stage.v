@@ -84,7 +84,7 @@ fprFile fprFile0(
 	.busB(F_OPERAND_B)
 	);
 
-always @(posedge clk) begin
+always @(*) begin
 Rs = instruction[6:10];
 Rt = instruction[11:15];
 Rd = instruction[16:20];

@@ -46,7 +46,9 @@ module gprFile
 			regFile[0] <= 0;
 		end
 
-		busA<=regFile[Rs];
-		busB<=regFile[Rt];
-	end
+
+	end//always
+
+	assign busA=regFile[Rs];
+	assign busB=regFile[Rt];
 endmodule

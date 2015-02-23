@@ -11,7 +11,7 @@ module processor_tb();
     dmem #(.SIZE(16384)) DMEM(
 		.addr(addr),
 		.data_out(data_from_mem),
-		.data_in(data_from_reg),
+		.data_in(data_from_proc),
 		.write_enable(write_enable),
 		.mem_byte(mem_byte),
 		.mem_half_word(mem_half_word),
@@ -41,10 +41,11 @@ module processor_tb();
 		.inst_from_mem(instr)
 	);
 
-	always
+	always begin
 		//Clock cycle is 100
-		#50 clock = !clock;
-
+		#100 clock = !clock;
+		$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%x \t data_from_mem =%x\n\n", clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
+end
     initial begin
         // Clear DMEM
         for (i = 0; i < DMEM.SIZE; i = i+1)
@@ -69,11 +70,14 @@ module processor_tb();
 		// $monitor("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x", clock, reset, iaddr, instr);
 
 		//Start clock
-		clock = 0;
 
+		#0 clock = 0;
+		#0 reset = 1;
 		//Reset registers for 1 cycle
-		reset = 1;
-		#100 reset = 0;
+
+		#199 reset = 0;
+
+		
 
         // Debug: dump memory
         // $writememh("dmem", DMEM.mem);
