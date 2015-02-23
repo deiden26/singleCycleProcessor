@@ -374,7 +374,7 @@ case(opcode)
 		EXT_OP = 1;
 	end //SH
 
-	SB: begin
+	SW: begin
 		ALU_CTRL_BITS = ALU_ADD_CTRL;
 		ALU_SRC = 1;
 		MEM_WR = 1;
