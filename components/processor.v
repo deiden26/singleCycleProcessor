@@ -16,7 +16,7 @@ module processor(
 );
 
 	wire gp_branch, fp_branch, jump, jump_use_reg, branch, fpu_ctrl_bits, write_enable, mem_to_reg, mov_instr, mem_byte, mem_half_word, mem_sign_extend, jal_instr;
-	wire [0:31] pc_from_reg, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
+	wire [0:31] bus_b,pc_from_reg, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
 	wire [0:3] alu_ctrl_bits;
 
 	//initial
@@ -47,6 +47,7 @@ module processor(
 		.FBUS_W(fbus_w),
 		.OPERAND_A(operand_a),
 		.OPERAND_B(operand_b),
+		.BUS_B(bus_b),
 		.F_OPERAND_A(f_operand_a),
 		.F_OPERAND_B(f_operand_b),
 		.BRANCH(branch),
@@ -71,14 +72,19 @@ module processor(
 		.fbusB(f_operand_b),
 		.FPUctrl(fpu_ctrl_bits),
 		.ALUout(alu_out),
-		.FPUout(fpu_out)
+		.FPUout(fpu_out),
+		.gp_branch(gp_branch),
+		.fp_branch(fp_branch)
 	);
 
+
+
+//*************NEEDS FIXING: currently can't pass Rd value over to memory write, only passes operand b currently
 	mem_stage MEM(
 		.store_fp(1'b0),
 		//Connections to processor
 		.addr_from_proc(alu_out),
-		.gp_data_from_proc(operand_b),
+		.gp_data_from_proc(bus_b),
 		.fp_data_from_proc(f_operand_b),
 		.write_enable_from_proc(write_enable),
 		.byte_from_proc(mem_byte),

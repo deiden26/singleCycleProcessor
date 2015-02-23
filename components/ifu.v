@@ -27,6 +27,8 @@ module ifu(
     output [0:31] inst_out                // fetched instruction out
   );
 
+  reg [0:31] branch_offset;
+  reg [0:31] jump_offset;
 
   wire    [0:31] pc_plus_4;               // Default next pc
 
@@ -44,17 +46,21 @@ module ifu(
   // Pass PC+8 out to reg31
   assign pc_8_out = pc_plus_4 + 4;
 
+  assign branch_offset = (inst_out[16] == 1) ? {16'hFFFF, inst_out[16:31]} : {16'h0000, inst_out[16:31]};
+
+ assign jump_offset = (inst_out[0] == 1) ? {6'b111111, inst_out[0:25]} : {6'b000000, inst_out[0:15]};
   // calculate next pc
-  always@(branch or gp_branch or fp_branch or jump or use_reg or pc_plus_4 or inst_out or pc_from_reg) begin
-	  //If branching, next_pc = pc + 4 + signExtend(inst_out[0:15])
+  //always@(branch or gp_branch or fp_branch or jump or use_reg or pc_plus_4 or inst_out or pc_from_reg) begin
+	  always @(*) begin
+    //If branching, next_pc = pc + 4 + signExtend(inst_out[0:15])
 	  if ((gp_branch || fp_branch) && branch)
-		  next_pc <= pc_plus_4 + inst_out[0:15];
+		  next_pc <= pc_plus_4 + branch_offset;
 	  //If JALR or JR, next_pc = reg31
 	  else if (jump && use_reg)
 		  next_pc <= pc_from_reg;
 	  //If jumping (without reg), next_pc = pc + 4 + signExtend(inst_out[0:25])
 	  else if (jump)
-		  next_pc <= pc_plus_4 + inst_out[0:25];
+		  next_pc <= pc_plus_4 + jump_offset;
 	  //Default: move to next word in mem, pc = pc + 4
 	  else
 		  next_pc <= pc_plus_4;

@@ -6,6 +6,7 @@ module ID_Stage(
 	input [0:31] FBUS_W,
 	output [0:31] OPERAND_A,
 	output logic [0:31] OPERAND_B,
+	output logic [0:31] BUS_B,
 	output [0:31] F_OPERAND_A,
 	output [0:31] F_OPERAND_B,
 	output BRANCH,
@@ -94,7 +95,7 @@ IMM_FIELD = (temp_IMM_ZERO == 1) ? 16'h0 : instruction[16:31];
 
 
 	IMM_FIELD_EXT = (temp_EXT_OP == 1) ? {{16{IMM_FIELD[15]}}, IMM_FIELD[0:15]} : {16'h0, IMM_FIELD[0:15]};
-
+	BUS_B = temp_bus_B;
 	OPERAND_B = (ALU_SRC ==1) ? IMM_FIELD_EXT : temp_bus_B;
 	end
 endmodule
