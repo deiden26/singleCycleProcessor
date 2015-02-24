@@ -44,7 +44,8 @@ module processor_tb();
 	always begin
 		//Clock cycle is 100
 		#100 clock = !clock;
-		$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%x \t data_from_mem =%x\n\n", clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
+		if((instr == 32'hac612000 || instr == 32'hac622000) && clock ==1)
+			$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%d \t data_from_mem =%x\n\n", clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
 end
     initial begin
         // Clear DMEM
@@ -80,7 +81,7 @@ end
 		
 
         // Debug: dump memory
-        // $writememh("dmem", DMEM.mem);
+        $writememh("dmem", DMEM.mem);
 	end
 
 	always begin
