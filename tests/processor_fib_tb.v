@@ -1,6 +1,6 @@
 module processor_tb();
-	parameter IMEMFILE = "../tests/instr.hex";
-    parameter DMEMFILE = "../tests/data.hex";
+	parameter IMEMFILE = "../tests/fib_instr.hex";
+    parameter DMEMFILE = "../tests/fib_data.hex";
     reg [8*80-1:0] filename;
     reg reset, clock; 
     wire [0:31] addr, iaddr, data_from_mem, data_from_reg, instr,data_from_proc;
