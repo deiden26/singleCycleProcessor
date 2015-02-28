@@ -44,9 +44,9 @@ module processor_tb();
 	always begin
 		//Clock cycle is 100
 		#100 clock = !clock;
-		if((instr == 32'hac612000 || instr == 32'hac622000) && clock ==1)
-			$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%d \t data_from_mem =%x\n\n", clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
-end
+// 		if((instr == 32'hac612000 || instr == 32'hac622000) && clock ==1)
+// 			$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%d \t data_from_mem =%x\n\n", clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
+	end
     initial begin
         // Clear DMEM
         for (i = 0; i < DMEM.SIZE; i = i+1)
@@ -64,11 +64,11 @@ end
         end
         $readmemh(filename, DMEM.mem);
 
-		//Monitor memory
-		// $monitor("write enable=%b | mem_byte=%b | half word=%b | sign extend=%b | address=%x | data out= %x | data in=%x",
-		// 	write_enable, mem_byte, mem_half_word, sign_extend, addr, data_from_mem, data_from_reg);
-
-		// $monitor("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x", clock, reset, iaddr, instr);
+		//Print memory
+		$display("Memory Before");
+		for (i = 8192; i<8292; i = i+1) begin
+			$display("%d", DMEM.mem[i]);
+		end
 
 		//Start clock
 
@@ -85,8 +85,15 @@ end
 	end
 
 	always begin
-		if(^instr === 1'bx && reset === 0)
+		if(^instr === 1'bx && reset === 0) begin
+			//Print memory
+			$display("Memory After");
+			for (i = 8192; i<8292; i = i+1) begin
+				$display("%d", DMEM.mem[i]);
+			end
+			//End Sumulation
 			$finish;
+		end
 		else
 			#100;
 	end
