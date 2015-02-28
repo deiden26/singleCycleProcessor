@@ -27,7 +27,7 @@ module alufpu(busA, busB, ALUctrl, fbusA, fbusB, FPUctrl, ALUout, FPUout, gp_bra
 	andOut <= busA & busB;
 	orOut <= busA | busB;
 	xorOut <= busA ^ busB;
-	lhiOut <= {16'b0, busB[0:15]};
+	lhiOut <= {busB[16:31], 16'b0};
 
 	if (busA==busB) begin
 	seqOut <= 1;

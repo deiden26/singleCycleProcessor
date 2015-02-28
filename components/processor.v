@@ -16,7 +16,7 @@ module processor(
 );
 
 	wire gp_branch, fp_branch, jump, jump_use_reg, branch, fpu_ctrl_bits, write_enable, mem_to_reg, mov_instr, mem_byte, mem_half_word, mem_sign_extend, jal_instr;
-	wire [0:31] bus_b,pc_from_reg, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
+	wire [0:31] bus_b, pc_plus_8, instr, bus_w, fbus_w, operand_a, operand_b, f_operand_a, f_operand_b, alu_out, fpu_out, mem_data;
 	wire [0:3] alu_ctrl_bits;
 
 	//initial
@@ -31,7 +31,7 @@ module processor(
 		.fp_branch (fp_branch),              // taken-branch signal for fpu 
 		.jump (jump),                   // jump signal
 		.use_reg (jump_use_reg),                // if JR or JALR
-		.pc_from_reg (pc_from_reg),            // use if use_reg is TRUE
+		.pc_from_reg (operand_a),            // use if use_reg is TRUE
 		.inst_from_mem (inst_from_mem),          // Data coming back from instruction-memory
 
 		.pc_to_mem (iaddr),              // Address sent to Instruction memory
