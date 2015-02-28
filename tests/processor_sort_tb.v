@@ -48,6 +48,9 @@ module processor_tb();
 // 			$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%d \t data_from_mem =%x\n\n", clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
 	end
     initial begin
+		$monitor("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%d \t data_from_mem =%x",
+		clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
+
         // Clear DMEM
         for (i = 0; i < DMEM.SIZE; i = i+1)
             DMEM.mem[i] = 8'h0;
