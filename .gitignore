@@ -1,3 +1,5 @@
 *.exe
 *.hex
 .DS_STORE
+dmem
+*.swp
