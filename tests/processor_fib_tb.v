@@ -64,11 +64,10 @@ end
         end
         $readmemh(filename, DMEM.mem);
 
-		//Monitor memory
-		// $monitor("write enable=%b | mem_byte=%b | half word=%b | sign extend=%b | address=%x | data out= %x | data in=%x",
-		// 	write_enable, mem_byte, mem_half_word, sign_extend, addr, data_from_mem, data_from_reg);
+		$display("Initial memory");
+		for(i=8192; i < 8376; i = i+4)
+			$display("%d", {DMEM.mem[i], DMEM.mem[i+1], DMEM.mem[i+2], DMEM.mem[i+3]});
 
-		// $monitor("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x", clock, reset, iaddr, instr);
 
 		//Start clock
 
@@ -85,8 +84,12 @@ end
 	end
 
 	always begin
-		if(^instr === 1'bx && reset === 0)
+		if(^instr === 1'bx && reset === 0) begin
+			$display("Final memory");
+			for(i=8192; i < 8376; i = i+4)
+				$display("%d", {DMEM.mem[i], DMEM.mem[i+1], DMEM.mem[i+2], DMEM.mem[i+3]});
 			$finish;
+		end
 		else
 			#100;
 	end
