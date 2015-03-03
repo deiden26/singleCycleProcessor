@@ -121,7 +121,7 @@ case(opcode)
 				end
 
 			ALU_SGT: begin
-				ALU_CTRL_BITS = ALU_ADD_CTRL;
+				ALU_CTRL_BITS = ALU_SGT_CTRL;
 				REG_WR = 1;
 				end
 
@@ -245,12 +245,6 @@ case(opcode)
 		JAL_INSTR = 1;
 		JUMP_USE_REG = 1;
 	end //JALR
-
-	SLLI: begin
-		REG_WR = 1;
-		ALU_CTRL_BITS = ALU_SLL_CTRL;
-		ALU_SRC = 1;
-	end //SLLI
 
 	SLLI: begin
 		REG_WR = 1;
