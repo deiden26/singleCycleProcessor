@@ -94,7 +94,11 @@ IMM_FIELD = (temp_IMM_ZERO == 1) ? 16'h0 : instruction[16:31];
 
 
 
-	IMM_FIELD_EXT = (temp_EXT_OP == 1) ? {{16{IMM_FIELD[15]}}, IMM_FIELD[0:15]} : {16'h0, IMM_FIELD[0:15]};
+	// IMM_FIELD_EXT = (temp_EXT_OP == 1) ? {{16{IMM_FIELD[15]}}, IMM_FIELD[0:15]} : {16'h0, IMM_FIELD[0:15]};
+	if (temp_EXT_OP == 1)
+		IMM_FIELD_EXT = $signed(IMM_FIELD);
+	else
+		IMM_FIELD_EXT = $unsigned(IMM_FIELD);
 	BUS_B = temp_bus_B;
 	OPERAND_B = (ALU_SRC ==1) ? IMM_FIELD_EXT : temp_bus_B;
 	end
