@@ -44,7 +44,7 @@ module processor_tb();
 	always begin
 		//Clock cycle is 100
 		#100 clock = !clock;
-		if((instr == 32'hac052000 || instr == 32'h8cc42000) && clock ==1)
+		if((instr == 32'hac052028 || instr == 32'h8cc42000) && clock ==1)
 			$display("clock = %b \t reset = %b \t iaddr = %x \t instruction = %x \t addr_to_mem = %x \tdata_to_mem =%d \t data_from_mem =%d\n",
 			clock, reset, iaddr, instr, addr,data_from_proc, data_from_mem);
 	end

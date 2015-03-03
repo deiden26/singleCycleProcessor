@@ -13,6 +13,8 @@ _dat:
 .word 268435456
 .word 536870912 
 .word 3221225472
+_result:
+.word 0
 
 .text
 .proc _usum
@@ -29,5 +31,5 @@ _loop:
     addu r5, r5, r4
     subi r6, r6, 4
     bnez r6, _loop
-    sw _dat(r0), r5
+    sw _result(r0), r5
 .endproc _usum
